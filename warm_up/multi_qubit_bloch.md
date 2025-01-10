@@ -191,14 +191,8 @@ This follows immediately by letting $N=3$ and relabeling the indices as $(i_1,i_
 Many textbooks adopt a more conceptual or physically motivated grouping (eg. `Hassan et al., Eq. 20`). They group the terms according to which qubits carry a Pauli operator (rather than the identity):
 
 $$
-\rho_{12 \ldots N}
-=\frac{1}{2^N}\Bigl[
-I 
-+ \sum_{k=1}^N s^{(k)} \sigma^{(k)} 
-+ \sum_{\{k_1, k_2\}} T^{\{k_1, k_2\}} \sigma^{(k_1)}\sigma^{(k_2)}
-+ \ldots 
-+ T^{\{1,2,\ldots,N\}} \sigma^{(1)}\cdots\sigma^{(N)}
-\Bigr].
+\rho_{12 \ldots N} =\frac{1}{2^N}\Bigl[
+I + \sum_{k=1}^N s^{(k)} \sigma^{(k)} + \sum_{\{k_1, k_2\}} T^{\{k_1, k_2\}} \sigma^{(k_1)}\sigma^{(k_2)} + \ldots + T^{\{1,2,\ldots,N\}} \sigma^{(1)}\cdots\sigma^{(N)} \Bigr]
 $$
 
 - The *first term* $I$ is the identity on *all* $N$ qubits (which, in the other notation, corresponds to $i_1 = \ldots = i_N = 0$).  
