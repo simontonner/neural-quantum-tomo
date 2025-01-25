@@ -56,9 +56,30 @@ $$
 \rho \;=\; \sum_{\alpha=0}^{3} c_\alpha\,\sigma_\alpha.
 $$
 
-We want the expansion to reproduce $\rho$ correctly and ensure $\text{tr}(\rho)=1$. Using the orthonormality of $\sigma_\alpha$, one finds
+We want the expansion to reproduce $\rho$ correctly and ensure $\operatorname{tr}(\rho)=1$. Using the orthonormality of $\sigma_\alpha$, one finds
+
 $$
-c_\alpha \;=\; \frac{1}{2}\,\text{tr}\bigl(\rho\,\sigma_\alpha\bigr).
+\left\langle\rho, \sigma_\alpha\right\rangle_{\mathrm{HS}}=\left\langle\sum_{\beta=0}^3 c_\beta \sigma_\beta, \sigma_\alpha\right\rangle_{\mathrm{HS}},
+$$
+
+which expands to
+
+$$
+\left\langle\rho, \sigma_\alpha\right\rangle_{\mathrm{HS}}=\sum_{\beta=0}^3 c_\beta\left\langle\sigma_\beta, \sigma_\alpha\right\rangle_{\mathrm{HS}} .
+$$
+
+
+Using the orthonormality relation $\left\langle\sigma_\beta, \sigma_\alpha\right\rangle_{\mathrm{HS}}=2 \delta_{\alpha \beta}$, we remain only with the on sum term where $\alpha = \beta$
+
+$$
+\left\langle\rho, \sigma_\alpha\right\rangle_{\mathrm{HS}}=\operatorname{tr}\left(\rho \sigma_\alpha\right)= 2c_\alpha,
+$$
+
+
+So
+
+$$
+c_\alpha=\frac{1}{2} \operatorname{tr}\left(\rho \sigma_\alpha\right) .
 $$
 Hence,
 $$
