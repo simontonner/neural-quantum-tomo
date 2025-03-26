@@ -32,3 +32,60 @@ class RBM(nn.Module):
 
 
 
+def train_rbm(rbm, train_loader, num_epochs, k, optimizer, scheduler=None, pcd_reset=5):
+    rbm.train()
+
+    fantasy_particles = torch.bernoulli(torch.rand(batch_size, rbm.n_visible)).to(device)
+
+    metrics = {}
+    for epoch in range(num_epochs):
+        total_loss = 0.0
+
+        for batch_idx, (data, _) in enumerate(train_loader):
+            data = data.view(-1, rbm.n_visible).to(device)
+
+            if batch_idx % pcd_reset == 0:
+                fantasy_particles = torch.bernoulli(torch.rand(batch_size, rbm.n_visible)).to(device)
+
+            v_k = rbm.sample_gibbs(fantasy_particles, k)
+            fantasy_particles = v_k.detach()
+
+            loss = rbm.free_energy(data).mean() - rbm.free_energy(v_k).mean()
+
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
+
+            total_loss += loss.item()
+
+        if scheduler is not None:
+            scheduler.step()
+
+        avg_loss = total_loss / len(train_loader)
+        metrics[epoch] = { "free_energy_loss": avg_loss }
+        print(f"Epoch [{epoch+1}/{num_epochs}] - Free Energy Loss: {avg_loss:.4f}")
+
+    return metrics
+
+
+#### TRAINING
+
+batch_size      = 128
+visible_units   = 28*28
+hidden_units    = 256
+k               = 1
+lr              = 1e-3
+num_epochs      = 30
+pcd_reset       = 75        # reset persistent chain every N batches
+weight_decay    = 1e-5      # L2 regularization
+lr_decay        = 0.95      # learning rate decay PER EPOCH
+
+
+train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, drop_last=True)
+
+rbm = RBM(visible_units, hidden_units).to(device)
+
+optimizer = optim.Adam(rbm.parameters(), lr=lr, weight_decay=weight_decay)
+scheduler = optim.lr_scheduler.ExponentialLR(optimizer, gamma=lr_decay)
+
+metrics = train_rbm(rbm, train_loader, num_epochs=num_epochs, k=k, optimizer=optimizer, scheduler=scheduler, pcd_reset=pcd_reset)
