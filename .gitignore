@@ -6,3 +6,6 @@
 
 # everithing inside any data folder
 **/data/**
+
+# exclude everything inside any models folder
+**/models/**
