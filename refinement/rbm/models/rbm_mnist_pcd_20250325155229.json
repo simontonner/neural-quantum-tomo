@@ -1,0 +1,1 @@
+{"visible_units": 784, "hidden_units": 256, "k": 1, "lr": 0.001, "num_epochs": 30, "pcd_reset": 75, "weight_decay": 1e-05, "lr_decay": 0.95}
