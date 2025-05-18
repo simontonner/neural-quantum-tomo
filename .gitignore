@@ -9,3 +9,8 @@
 
 # exclude everything inside any models folder
 **/models/**
+
+# temporary excludes
+**/models_histogram/**
+**/models_overlap/**
+
