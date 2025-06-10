@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Dict
 import jax.numpy as jnp
 
 def save_state_vector(state_vec: jnp.ndarray, file_path: Path):
@@ -14,19 +15,21 @@ def save_state_vector(state_vec: jnp.ndarray, file_path: Path):
     print(f"State vector written to {file_path} ({file_path.stat().st_size} bytes)")
 
 
-def load_state_vector(file_path: Path) -> jnp.ndarray:
+def load_state_vector(file_path: Path) -> Dict[str, complex]:
     with open(file_path, "r") as file:
         lines = file.readlines()
 
-    state_vec = []
+    state_vec_dict = {}
     for line in lines:
-        _, value_str = line.strip().split(": ")
+        bitstring, value_str = line.strip().split(": ")
+
         re_str, im_str = value_str.split()
         re = float(re_str)
         im = float(im_str[:-1])  # remove trailing 'j'
-        state_vec.append(re + 1j * im)
+        amplitude = complex(re, im)
 
-    return jnp.array(state_vec, dtype=jnp.complex64)
+        state_vec_dict[bitstring] = amplitude
 
+    return  state_vec_dict
 
 
