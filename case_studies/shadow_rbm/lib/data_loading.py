@@ -9,7 +9,7 @@ from tqdm import tqdm
 from .formatting import filestring_to_tensor
 
 
-class CombinedDataLoader:
+class MixedDataLoader:
     def __init__(self,
                  data: jnp.ndarray,
                  batch_size: int = 128,
