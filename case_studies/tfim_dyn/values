@@ -1,0 +1,42 @@
+Array(0.96355546, dtype=float32)
+Array(0.808689, dtype=float32)
+Array(0.5733111, dtype=float32)
+Array(0.522311, dtype=float32)
+Array(0.4692221, dtype=float32)
+Array(0.43335545, dtype=float32)
+Array(0.402711, dtype=float32)
+Array(0.35899994, dtype=float32)
+Array(0.33684438, dtype=float32)
+Array(0.32379994, dtype=float32)
+
+
+
+MAGNETIZATION Z WITH ERROR
+(Array(0.96355546, dtype=float32), Array(0.00095043, dtype=float32))
+(Array(0.808689, dtype=float32), Array(0.00238831, dtype=float32))
+(Array(0.5733111, dtype=float32), Array(0.00302786, dtype=float32))
+(Array(0.522311, dtype=float32), Array(0.00298788, dtype=float32))
+(Array(0.4692221, dtype=float32), Array(0.00285686, dtype=float32))
+(Array(0.43335545, dtype=float32), Array(0.00275991, dtype=float32))
+(Array(0.402711, dtype=float32), Array(0.00264666, dtype=float32))
+(Array(0.35899994, dtype=float32), Array(0.00244836, dtype=float32))
+(Array(0.33684438, dtype=float32), Array(0.00232545, dtype=float32))
+(Array(0.32379994, dtype=float32), Array(0.00225067, dtype=float32))
+
+
+MAGNETIZATION X WITH ERROR
+(Array(0.6690979, dtype=float32), Array(0.00393375, dtype=float32))
+(Array(0.838016, dtype=float32), Array(0.0032602, dtype=float32))
+(Array(0.95723516, dtype=float32), Array(0.00212176, dtype=float32))
+(Array(0.974556, dtype=float32), Array(0.00185027, dtype=float32))
+(Array(0.99090964, dtype=float32), Array(0.00154136, dtype=float32))
+(Array(0.9998612, dtype=float32), Array(0.0013611, dtype=float32))
+(Array(1.0074241, dtype=float32), Array(0.00117306, dtype=float32))
+(Array(1.0173744, dtype=float32), Array(0.00087963, dtype=float32))
+(Array(1.0212257, dtype=float32), Array(0.00075712, dtype=float32))
+(Array(1.0226396, dtype=float32), Array(0.00072234, dtype=float32))
+
+
+
+#### NEW VALUES
+
