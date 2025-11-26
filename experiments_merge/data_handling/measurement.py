@@ -52,10 +52,10 @@ class MultiQubitMeasurement:
         except KeyError as e:
             raise ValueError(f"Unknown measurement axis '{e.args[0]}'; use only X/Y/Z/I.") from None
 
-        # Z or I both mean computational-basis eigenkets; fast path if no X/Y present
         self._all_ZI = all(c in ('Z', 'I') for c in meas_dirs)
-        self.basis_vecs: List[np.ndarray] | None = None
+        self.basis_vecs = None
 
+        # we only need to construct the full basis if there are X/Y measurements
         if not self._all_ZI:
             self.basis_vecs = self._construct_measurement_basis(show_tqdm=show_tqdm)
 

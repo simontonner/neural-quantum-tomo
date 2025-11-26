@@ -62,7 +62,7 @@ def main() -> None:
     side_length = 4
     J = 1.00
     delta_values = [0.40, 0.60, 0.80, 0.90, 0.95, 1.00, 1.05, 1.10, 1.20, 1.40, 2.00]
-    num_samples = 10_000
+    num_samples = 20_000
 
     out_meas = Path("measurements")
     out_states = Path("state_vectors")

@@ -28,6 +28,7 @@ def _ensure_values(values: np.ndarray, ctx: str) -> np.ndarray:
         raise ValueError(f"{ctx}: values must be only 0/1.")
     return values
 
+
 class MeasurementDataset:
     """
     Minimal dataset consuming measurement files via a user-supplied loader.
@@ -40,6 +41,11 @@ class MeasurementDataset:
 
     Parameters are taken strictly from headers['state'] and limited to `system_param_keys`.
     If `system_param_keys` is None or empty, no params are extracted and `system_params=None`.
+
+    New (optional, backwards compatible):
+        samples_per_file : iterable of ints, same length as file_paths.
+            For each file i, only the first samples_per_file[i] rows are kept.
+            If None, full files are used (old behaviour).
     """
 
     def __init__(
@@ -47,20 +53,39 @@ class MeasurementDataset:
             file_paths: Iterable[Path],
             load_fn: LoaderFn,
             system_param_keys: Optional[List[str]] = None,
+            samples_per_file: Optional[Iterable[int]] = None,   # <-- NEW
     ):
         paths = [Path(p) for p in file_paths]
         if not paths:
             raise ValueError("No measurement files provided.")
         self.system_param_keys = list(system_param_keys) if system_param_keys else []
 
+        # NEW: normalize samples_per_file to a list aligned with paths
+        if samples_per_file is not None:
+            samples_list = list(samples_per_file)
+            if len(samples_list) != len(paths):
+                raise ValueError(
+                    "samples_per_file must have the same length as file_paths."
+                )
+        else:
+            samples_list = [None] * len(paths)
+
         per_file: List[Dict[str, Any]] = []
         fixed_bases_seen = set()
         nqubits_global: Optional[int] = None
 
-        for p in paths:
+        for p, max_rows in zip(paths, samples_list):
             values_np, bases_list, headers = load_fn(p)
             ctx = f"{p.name}"
             values_np = _ensure_values(values_np, ctx)
+
+            # NEW: per-file truncation if max_rows is given
+            if max_rows is not None:
+                if max_rows < 0:
+                    raise ValueError("samples_per_file entries must be non-negative.")
+                if max_rows < values_np.shape[0]:
+                    values_np = values_np[:max_rows]
+
             basis_t = _basis_tuple(bases_list)
 
             nqubits = values_np.shape[1]
@@ -96,6 +121,9 @@ class MeasurementDataset:
                     nrows=int(values_np.shape[0]),
                 )
             )
+
+        # NEW: keep track of how many rows we actually used per file
+        self.samples_per_file: List[int] = [info["nrows"] for info in per_file]
 
         assert nqubits_global is not None
         self.num_qubits = nqubits_global
