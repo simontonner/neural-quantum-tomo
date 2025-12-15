@@ -1,0 +1,67 @@
+Nice — that plot is *exactly* the story:
+
+* **$\chi_F$ peaks at $h\approx 2.55$** (pseudo-critical for $4\times4$ PBC).
+* But **“learning hardness” for an RBM** is not $\chi_F$ — it’s closer to:
+
+> **broad support** (many configs matter) **+ nontrivial dependencies** (not i.i.d.)
+
+And **around $h\sim 3$** you’re in that annoying “broad-ish but still correlated” regime: $N_{\rm eff}$ is starting to grow, while $| \langle zz\rangle_c|_{\rm nn}$ is still clearly nonzero. That’s where **CD-$k$ + finite data** most easily gives you a biased model → overlap dip.
+
+### Add the one diagnostic that usually peaks near your “bad” region
+
+Compute the **total correlation** (a.k.a. multi-information):
+
+$$
+\mathrm{TC}(h)=\sum_i H(p_i(h)) - H(P_h),
+$$
+
+where $p_i$ is the single-spin marginal and $H$ is Shannon entropy.
+This spikes when the distribution is **both** high-entropy **and** dependent — which is typically where RBMs trained with CD struggle most.
+
+Here’s a minimal patch to your ED-only script (just replace `compute_observables` with this version and add `TC` to the plot):
+
+```python
+def binary_entropy(p):
+    p = np.clip(p, 1e-12, 1 - 1e-12)
+    return -(p*np.log(p) + (1-p)*np.log(1-p))
+
+def compute_observables(psi: np.ndarray, z: np.ndarray, edges: np.ndarray):
+    P = psi * psi
+    dimH, N = z.shape
+
+    Neff = 1.0 / np.sum(P * P)
+
+    eps = 1e-300
+    H_joint = -np.sum(P * np.log(P + eps))              # H(P_h)
+
+    # single-site marginals in {0,1} using z in {-1,+1}:  p(zi=+1) = (1+<zi>)/2
+    m = P @ z                                           # <z_i>
+    p_up = 0.5 * (1.0 + m)
+    H_single = np.sum(binary_entropy(p_up))             # sum_i H(p_i)
+
+    TC = float(H_single - H_joint)
+
+    # NN connected zz
+    i = edges[:, 0]
+    j = edges[:, 1]
+    zz_edge = (P[:, None] * (z[:, i] * z[:, j])).sum(0)
+    conn_edge = zz_edge - m[i] * m[j]
+    Cnn_conn = float(np.mean(conn_edge))
+
+    return {
+        "Neff": float(Neff),
+        "Neff_norm": float(Neff / dimH),
+        "H_joint": float(H_joint),
+        "H_single_sum": float(H_single),
+        "TC": float(TC),
+        "Cnn_conn": float(Cnn_conn),
+        "Cnn_conn_abs_mean": float(np.mean(np.abs(conn_edge))),
+    }
+```
+
+Then plot `TC` (on the right axis) along with `Neff_norm` and `|Cnn_conn|`. If **TC peaks near $h\sim3$**, that’s your “why overlap is worst there” in one number.
+
+If you show me the new plot with `TC`, I can tell you immediately whether your dip-at-3 is primarily:
+
+* **CD mixing bias** (very likely), or
+* **conditional network bias** (second likely).

@@ -1,0 +1,55 @@
+Perfetto - that plot basically screams:
+
+* **The “dip near $h\sim 3$” is *not* caused by “$W$ fixed across $h$”.**
+  Because when you *do* allow $W$ to change (Model B), it **doesn’t reliably improve** there - and for **low data (blue, $N=2000$)** it actually gets *worse* (big extra dip around $h\approx 2.5$–$2.8$).
+
+So what’s going on?
+
+### What the result means
+
+Model B has **a lot more freedom**, but you’re still training with **CD-$k$** on finite-shot samples. With $N=2000$, the extra degrees of freedom in $W(h)$ are basically a liability:
+
+* the conditioner can output large $\gamma_W,\beta_W$ early,
+* CD-$k$ gradients are biased,
+* you end up with a worse model (classic “more expressive, harder to train”).
+
+For $N=10000$ (green), Model B is “ok-ish”, but still not clearly better than the simpler bias-only baseline.
+
+### Fix Model B properly (3 surgical changes)
+
+Keep your architecture, but make $W$-modulation **small + stable**:
+
+**(1) Zero-init the conditioner’s last layer** (so the model starts as “no modulation” and only learns it if needed)
+
+```python
+nn.init.zeros_(self.fc2.weight)
+nn.init.zeros_(self.fc2.bias)
+```
+
+**(2) Clamp modulation amplitudes** (this is huge)
+
+```python
+gamma_w = 0.05 * torch.tanh(gamma_w)   # was unconstrained
+beta_w  = 0.01 * torch.tanh(beta_w)
+```
+
+**(3) Use a smaller LR for the conditioner**
+
+```python
+opt = torch.optim.Adam([
+    {"params": [model.W, model.b, model.c], "lr": 1e-2},
+    {"params": model.conditioner.parameters(), "lr": 2e-3},
+], weight_decay=1e-5)
+```
+
+### Even simpler: drop $\beta_W$ entirely
+
+Honestly my opinion: **don’t use a shift for $W$** unless you really need it. Use only scaling:
+$$
+W_{\text{eff}} = (1+\gamma_W)\odot W
+$$
+It’s much harder to destabilize CD training.
+
+---
+
+If you want, paste the **training losses** for Model A vs Model B (just the per-epoch averages you already print). If Model B’s loss looks “fine” but overlap is worse, that’s almost always **CD bias / poor mixing**, and the right debug move is: for $N=16$, do **exact likelihood training** (sum over all $2^{16}$ states) just once to see if the dip vanishes.
