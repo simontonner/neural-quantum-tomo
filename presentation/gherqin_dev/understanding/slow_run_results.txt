@@ -1,0 +1,72 @@
+Epoch 1: Loss = 0.967521 | 58.04s
+Epoch 2: Loss = 0.875249 | 37.65s
+Epoch 3: Loss = 0.773889 | 38.23s
+Epoch 4: Loss = 0.752705 | 37.96s
+Epoch 5: Fidelity = 0.072561 | KL = 0.493577 | 38.93s
+Epoch 6: Loss = 0.725156 | 38.60s
+Epoch 7: Loss = 0.721079 | 34.17s
+Epoch 8: Loss = 0.719498 | 38.42s
+Epoch 9: Loss = 0.715726 | 35.46s
+Epoch 10: Fidelity = 0.096779 | KL = 0.460546 | 36.30s
+Epoch 11: Loss = 0.718422 | 39.40s
+Epoch 12: Loss = 0.705144 | 38.51s
+Epoch 13: Loss = 0.702054 | 37.57s
+Epoch 14: Loss = 0.706974 | 35.56s
+Epoch 15: Fidelity = 0.100442 | KL = 0.429045 | 34.21s
+Epoch 16: Loss = 0.691864 | 33.43s
+Epoch 17: Loss = 0.680138 | 36.73s
+Epoch 18: Loss = 0.689733 | 38.39s
+Epoch 19: Loss = 0.675364 | 36.09s
+Epoch 20: Fidelity = 0.104609 | KL = 0.387487 | 42.10s
+Epoch 21: Loss = 0.683406 | 42.32s
+Epoch 22: Loss = 0.677612 | 43.62s
+Epoch 23: Loss = 0.673470 | 46.13s
+Epoch 24: Loss = 0.675245 | 39.71s
+Epoch 25: Fidelity = 0.003147 | KL = 0.297021 | 39.86s
+Epoch 26: Loss = 0.581648 | 37.30s
+Epoch 27: Loss = 0.582897 | 40.88s
+Epoch 28: Loss = 0.588733 | 40.69s
+Epoch 29: Loss = 0.597607 | 43.45s
+Epoch 30: Fidelity = 0.074552 | KL = 0.240205 | 41.44s
+Epoch 31: Loss = 0.592613 | 37.58s
+Epoch 32: Loss = 0.598325 | 37.42s
+Epoch 33: Loss = 0.594059 | 34.94s
+Epoch 34: Loss = 0.575835 | 39.02s
+Epoch 35: Fidelity = 0.856803 | KL = 0.101350 | 40.90s
+Epoch 36: Loss = 0.544992 | 42.64s
+Epoch 37: Loss = 0.551253 | 40.46s
+Epoch 38: Loss = 0.587578 | 37.34s
+Epoch 39: Loss = 0.619195 | 35.93s
+Epoch 40: Fidelity = 0.857585 | KL = 0.180409 | 39.34s
+Epoch 41: Loss = 0.679430 | 42.22s
+Epoch 42: Loss = 0.728005 | 44.18s
+Epoch 43: Loss = 0.763155 | 36.68s
+Epoch 44: Loss = 0.793565 | 35.04s
+Epoch 45: Fidelity = 0.670347 | KL = 0.633465 | 34.84s
+Epoch 46: Loss = 0.843747 | 36.04s
+Epoch 47: Loss = 0.860434 | 37.77s
+Epoch 48: Loss = 0.896349 | 36.38s
+Epoch 49: Loss = 0.920331 | 37.90s
+Epoch 50: Fidelity = 0.544806 | KL = 1.009563 | 38.20s
+Epoch 51: Loss = 0.980727 | 38.16s
+Epoch 52: Loss = 1.001421 | 41.06s
+Epoch 53: Loss = 0.896647 | 40.05s
+Epoch 54: Loss = 0.872711 | 41.66s
+Epoch 55: Fidelity = 0.599818 | KL = 0.624917 | 39.44s
+Epoch 56: Loss = 0.787563 | 38.79s
+Epoch 57: Loss = 0.794184 | 36.15s
+Epoch 58: Loss = 0.774649 | 38.75s
+Epoch 59: Loss = 0.729659 | 35.22s
+Epoch 60: Fidelity = 0.433280 | KL = 1.563635 | 34.59s
+Epoch 61: Loss = 0.803187 | 35.69s
+Epoch 62: Loss = 0.935182 | 39.21s
+Epoch 63: Loss = 0.917339 | 37.36s
+Epoch 64: Loss = 0.813281 | 37.06s
+Epoch 65: Fidelity = 0.548676 | KL = 0.600874 | 36.56s
+Epoch 66: Loss = 0.739766 | 36.56s
+Epoch 67: Loss = 0.748291 | 37.31s
+Epoch 68: Loss = 0.844926 | 37.86s
+Epoch 69: Loss = 0.806043 | 36.29s
+Epoch 70: Fidelity = 0.431027 | KL = 1.494696 | 35.36s
+
+Process finished with exit code 0

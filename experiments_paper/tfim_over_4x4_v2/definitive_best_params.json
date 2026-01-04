@@ -1,0 +1,13 @@
+{
+  "config": {
+    "noise_frac": 0.0,
+    "k_steps": 5,
+    "batch_size": 256,
+    "lr_decay": "fast",
+    "num_hidden": 16,
+    "conditioner_width": 64,
+    "cond_dim": 1
+  },
+  "avg_overlap": 0.9728353917598724,
+  "min_overlap": 0.9615585803985596
+}

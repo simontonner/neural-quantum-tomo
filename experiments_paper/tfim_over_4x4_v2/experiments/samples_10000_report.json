@@ -1,0 +1,78 @@
+{
+  "config": {
+    "n_samples": 10000,
+    "epochs": 50
+  },
+  "results": [
+    {
+      "h": 1.0,
+      "overlap": 0.9994655847549438,
+      "type": "support"
+    },
+    {
+      "h": 1.5,
+      "overlap": 0.9990038871765137,
+      "type": "novel"
+    },
+    {
+      "h": 2.0,
+      "overlap": 0.9978570938110352,
+      "type": "support"
+    },
+    {
+      "h": 2.5,
+      "overlap": 0.9948011636734009,
+      "type": "novel"
+    },
+    {
+      "h": 2.8,
+      "overlap": 0.9930874109268188,
+      "type": "novel"
+    },
+    {
+      "h": 3.0,
+      "overlap": 0.992881715297699,
+      "type": "support"
+    },
+    {
+      "h": 3.2,
+      "overlap": 0.9931149482727051,
+      "type": "novel"
+    },
+    {
+      "h": 3.5,
+      "overlap": 0.9936841726303101,
+      "type": "novel"
+    },
+    {
+      "h": 4.0,
+      "overlap": 0.9946298599243164,
+      "type": "support"
+    },
+    {
+      "h": 4.5,
+      "overlap": 0.9954137802124023,
+      "type": "novel"
+    },
+    {
+      "h": 5.0,
+      "overlap": 0.9960519075393677,
+      "type": "support"
+    },
+    {
+      "h": 5.5,
+      "overlap": 0.9965602159500122,
+      "type": "novel"
+    },
+    {
+      "h": 6.0,
+      "overlap": 0.9969402551651001,
+      "type": "support"
+    },
+    {
+      "h": 7.0,
+      "overlap": 0.9974029660224915,
+      "type": "support"
+    }
+  ]
+}
