@@ -8,7 +8,7 @@ from .symmetric_hyper_rbm import SymmetricHyperRBM
 def save_model(
         model: SymmetricHyperRBM,
         config: Dict[str, Any],
-        results: list,
+        results: list,          # maybe drop this parameter
         path: Path,
 ):
     path.parent.mkdir(parents=True, exist_ok=True)

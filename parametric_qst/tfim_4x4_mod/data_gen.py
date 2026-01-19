@@ -60,10 +60,11 @@ if __name__ == "__main__":
     num_samples = 20_000
 
     # measurement and state points
-    h_support = [4.10, 4.20, 4.30, 4.40, 4.60, 4.70, 4.80, 4.90]  #
+    h_support = [1.00, 1.10, 1.50, 2.00, 2.10, 2.50, 2.80, 3.00,
+                 3.20, 3.30, 3.50, 3.60, 4.00, 4.50, 5.00, 6.00, 7.00]
 
     # extra states for fidelity reference
-    h_novel   = [4.50, 5.50]
+    h_novel   = [5.50]
 
     all_h_values = sorted(list(set(h_support + h_novel)))
 

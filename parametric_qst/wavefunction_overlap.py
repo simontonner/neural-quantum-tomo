@@ -4,7 +4,6 @@ import torch.nn as nn
 from pathlib import Path
 from typing import Optional
 
-# Assumes that 'data_handling' is reachable (i.e., sys.path is set in the calling script)
 from data_handling import load_state_npz
 
 def generate_basis_states(num_qubits: int, device: torch.device) -> torch.Tensor:
@@ -23,7 +22,6 @@ def load_gt_wavefunction(path: Path, device: torch.device) -> Optional[torch.Ten
         return None
 
     psi_np, _ = load_state_npz(path)
-    # Convert to tensor (Real part for TFIM)
     psi_true = torch.from_numpy(psi_np).real.float().to(device)
     return psi_true
 
@@ -36,16 +34,14 @@ def get_normalized_wavefunction(model: nn.Module, cond_batch: torch.Tensor, basi
     if cond_batch.dim() == 1:
         cond_batch = cond_batch.unsqueeze(0)
 
-    # Expand condition to match the number of basis states
+    # expand condition to match the number of basis states
     cond_exp = cond_batch.expand(basis_states.shape[0], -1)
 
-    # Get unnormalized log probabilities (energies)
     log_psi = model.log_score(basis_states, cond_exp)
 
-    # Compute normalization constant (Z) in log domain
+    # compute normalization constant (Z) in log domain
     log_norm_sq = torch.logsumexp(2.0 * log_psi, dim=0)
 
-    # Return normalized amplitudes
     return torch.exp(log_psi - 0.5 * log_norm_sq)
 
 @torch.no_grad()
@@ -62,14 +58,10 @@ def calculate_exact_overlap(model: nn.Module, cond_val: float,
         psi_true = torch.tensor(psi_true)
     psi_true = psi_true.real.float().to(device)
 
-    # Normalize Ground Truth
     psi_true = psi_true / torch.norm(psi_true)
 
-    # Create condition tensor
     cond_batch = torch.tensor([cond_val], device=device, dtype=torch.float32)
 
-    # Get Model Wavefunction
     psi_model = get_normalized_wavefunction(model, cond_batch, all_states)
 
-    # Compute dot product
     return torch.abs(torch.dot(psi_true, psi_model)).item()
