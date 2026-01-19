@@ -124,9 +124,8 @@ class SymmetricHyperRBM(nn.Module):
 
         B = v_model.size(0)
 
-        # starting the u chain with ones ensures that we don't flip our CD chain immediately away from the data
-        # let's try to form one well first before trying to mirror it
-        u = torch.ones((B, 1), device=v_model.device, dtype=v_model.dtype)
+        # we start from random noise to not bias towards either sector
+        u = torch.bernoulli(torch.full((B, 1), 0.5, device=v_model.device, dtype=v_model.dtype), generator=rng)
 
         h = torch.zeros((B, self.num_h), device=v_model.device, dtype=v_model.dtype)
 
@@ -155,7 +154,6 @@ class SymmetricHyperRBM(nn.Module):
         v = torch.bernoulli(torch.full((B, self.num_v), 0.5, device=device, dtype=dtype), generator=rng)
         h = torch.zeros((B, self.num_h), device=device, dtype=dtype)
 
-        # compared to the CD training, we now want to start from noise explicitly
         u = torch.bernoulli(torch.full((B, 1), 0.5, device=device, dtype=dtype), generator=rng)
 
         for T_val in T_schedule:
