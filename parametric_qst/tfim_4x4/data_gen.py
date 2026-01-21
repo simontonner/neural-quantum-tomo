@@ -64,7 +64,7 @@ if __name__ == "__main__":
                  3.20, 3.30, 3.50, 3.60, 4.00, 4.50, 5.00, 6.00, 7.00]
 
     # extra states for fidelity reference
-    h_novel   = [5.50]
+    h_novel   = [5.50, 6.50]
 
     all_h_values = sorted(list(set(h_support + h_novel)))
 
