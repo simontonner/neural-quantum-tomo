@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import Tuple, Dict, Any
 
 from .symmetric_hyper_rbm import SymmetricHyperRBM
+from .vanilla_hyper_rbm import VanillaHyperRBM
 
 
 def save_model(
@@ -43,6 +44,29 @@ def load_model(path: Path, device: torch.device) -> Tuple[SymmetricHyperRBM, Dic
     k_val = cfg.get("k", cfg.get("k_steps", 10))
 
     model = SymmetricHyperRBM(
+        num_v=cfg["num_visible"],
+        num_h=cfg["num_hidden"],
+        hyper_dim=cfg.get("conditioner_width", 64),
+        k=k_val,
+    ).to(device)
+
+    model.load_state_dict(checkpoint["model_state_dict"])
+    model.T = float(cfg.get("T", 1.0))
+    model.eval()
+
+    return model, cfg
+
+
+def load_model_vanilla(path: Path, device: torch.device) -> Tuple[VanillaHyperRBM, Dict[str, Any]]:
+    if not path.exists():
+        raise FileNotFoundError(f"Model not found at {path}")
+
+    checkpoint = torch.load(path, map_location=device)
+    cfg = checkpoint["config"]
+
+    k_val = cfg.get("k", cfg.get("k_steps", 10))
+
+    model = VanillaHyperRBM(
         num_v=cfg["num_visible"],
         num_h=cfg["num_hidden"],
         hyper_dim=cfg.get("conditioner_width", 64),
