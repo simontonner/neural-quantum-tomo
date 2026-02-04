@@ -56,13 +56,13 @@ class SymmetricHyperRBM(nn.Module):
         W_colsum = self.W.sum(dim=0)     # (H,)
 
         # calculate the free energies for both branches (u=1 and u=0)
-        preact_normal  = vW + c_mod
+        preact_normal = vW + c_mod
         preact_flipped = (W_colsum.unsqueeze(0) - vW) + c_mod
-        sp_normal  = F.softplus(preact_normal).sum(dim=-1)
+        sp_normal = F.softplus(preact_normal).sum(dim=-1)
         sp_flipped = F.softplus(preact_flipped).sum(dim=-1)
-        vb_normal  = -(v * b_mod).sum(dim=-1)
+        vb_normal = -(v * b_mod).sum(dim=-1)
         vb_flipped = -((1.0 - v) * b_mod).sum(dim=-1)
-        F_normal  = vb_normal  - sp_normal
+        F_normal = vb_normal  - sp_normal
         F_flipped = vb_flipped - sp_flipped
 
         # symmetrize by summing branch weights exp(-F/T) in log-space. can be done via logsumexp if we stack sum terms
@@ -103,9 +103,6 @@ class SymmetricHyperRBM(nn.Module):
         return -0.5 * self._free_energy(v, b_mod, c_mod) / self.T
 
     def forward(self, batch: Tuple[torch.Tensor, ...], aux_vars: Dict[str, Any]):
-        """
-        Training step. aux_vars must contain 'rng'.
-        """
         rng = aux_vars.get("rng")
 
         v_data, _, cond = batch
