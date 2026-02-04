@@ -6,7 +6,7 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-02-03T19:44:28.348721</dc:date>
+    <dc:date>2026-02-04T20:16:03.651709</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -30,14 +30,14 @@ z
 " style="fill: none"/>
   </g>
   <g id="axes_1">
-   <g clip-path="url(#pb1cf2d4e90)">
+   <g clip-path="url(#p83fc0cceea)">
     <image xlink:href="data:image/png;base64,
-iVBORw0KGgoAAAANSUhEUgAAATYAAAAvCAYAAABpEuZOAAAB3ElEQVR4nO3UUW6jQBAE0MJn2ftfa0/BdD4YYExY7X/rPSkibnrKWIlr2//+qb1GkmSkMjKy17ymjnlV9lRGkr0qezL3k73mNVv22uZ8y54to45r5v1Rn2Mvn4z6XPO9Phn5XL8fGZ/sc/84N/drW+7N3bozz/2v96zP8UxX9nzP69z2yLkzxvxcY+6P8/M8ZmvGef5tXi/7dZ05ZvWY17Wb1Dqff4dzVsv9Y55rnms2z13zOyO1zrdcD3O+XvZ/3U+yrTtLxrbMtkfG173kK3O9d+dsj4yX/DzPPOb1//nv5673zJf9t+zz/PdsvdY/MureH7+fZT1/ZY/6Pn893/yynrtrdtVy7vqnSMaZUff8dba8rso2lozzZ9QjeyRVqfNektRYdseVXct+xpgR916t+1WzGQAaUWxAO4oNaEexAe0oNqAdxQa0o9iAdhQb0I5iA9pRbEA7ig1oR7EB7Sg2oB3FBrSj2IB2FBvQjmID2lFsQDuKDWhHsQHtKDagHcUGtKPYgHYUG9COYgPaUWxAO4oNaEexAe0oNqAdxQa0o9iAdhQb0I5iA9pRbEA7ig1oR7EB7Sg2oB3FBrSj2IB2FBvQjmID2lFsQDuKDWhHsQHtKDagHcUGtPMDIyyABZFASKwAAAAASUVORK5CYII=" id="imaged7ef10c40d" transform="scale(1 -1) translate(0 -16.92)" x="0" y="0.288" width="111.6" height="16.92"/>
+iVBORw0KGgoAAAANSUhEUgAAATYAAAAvCAYAAABpEuZOAAAB3ElEQVR4nO3UUW6jQBAE0MJn2ftfa0/BdD4YYExY7X/rPSkibnrKWIlr2//+qb1GkmSkMjKy17ymjnlV9lRGkr0qezL3k73mNVv22uZ8y54to45r5v1Rn2Mvn4z6XPO9Phn5XL8fGZ/sc/84N/drW+7N3bozz/2v96zP8UxX9nzP69z2yLkzxvxcY+6P8/M8ZmvGef5tXi/7dZ05ZvWY17Wb1Dqff4dzVsv9Y55rnms2z13zOyO1zrdcD3O+XvZ/3U+yrTtLxrbMtkfG173kK3O9d+dsj4yX/DzPPOb1//nv5673zJf9t+zz/PdsvdY/MureH7+fZT1/ZY/6Pn893/yynrtrdtVy7vqnSMaZUff8dba8rso2lozzZ9QjeyRVqfNektRYdseVXct+xpgR916t+1WzGQAaUWxAO4oNaEexAe0oNqAdxQa0o9iAdhQb0I5iA9pRbEA7ig1oR7EB7Sg2oB3FBrSj2IB2FBvQjmID2lFsQDuKDWhHsQHtKDagHcUGtKPYgHYUG9COYgPaUWxAO4oNaEexAe0oNqAdxQa0o9iAdhQb0I5iA9pRbEA7ig1oR7EB7Sg2oB3FBrSj2IB2FBvQjmID2lFsQDuKDWhHsQHtKDagHcUGtPMDIyyABZFASKwAAAAASUVORK5CYII=" id="image83d296bc2c" transform="scale(1 -1) translate(0 -16.92)" x="0" y="0.288" width="111.6" height="16.92"/>
    </g>
   </g>
  </g>
  <defs>
-  <clipPath id="pb1cf2d4e90">
+  <clipPath id="p83fc0cceea">
    <rect x="0" y="-0" width="111.6" height="16.632"/>
   </clipPath>
  </defs>
