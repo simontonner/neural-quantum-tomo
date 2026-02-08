@@ -1,3 +1,5 @@
+from collections import deque
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -56,13 +58,13 @@ class SymmetricHyperRBM(nn.Module):
         W_colsum = self.W.sum(dim=0)     # (H,)
 
         # calculate the free energies for both branches (u=1 and u=0)
-        preact_normal  = vW + c_mod
+        preact_normal = vW + c_mod
         preact_flipped = (W_colsum.unsqueeze(0) - vW) + c_mod
-        sp_normal  = F.softplus(preact_normal).sum(dim=-1)
+        sp_normal = F.softplus(preact_normal).sum(dim=-1)
         sp_flipped = F.softplus(preact_flipped).sum(dim=-1)
-        vb_normal  = -(v * b_mod).sum(dim=-1)
+        vb_normal = -(v * b_mod).sum(dim=-1)
         vb_flipped = -((1.0 - v) * b_mod).sum(dim=-1)
-        F_normal  = vb_normal  - sp_normal
+        F_normal = vb_normal  - sp_normal
         F_flipped = vb_flipped - sp_flipped
 
         # symmetrize by summing branch weights exp(-F/T) in log-space. can be done via logsumexp if we stack sum terms
@@ -103,9 +105,6 @@ class SymmetricHyperRBM(nn.Module):
         return -0.5 * self._free_energy(v, b_mod, c_mod) / self.T
 
     def forward(self, batch: Tuple[torch.Tensor, ...], aux_vars: Dict[str, Any]):
-        """
-        Training step. aux_vars must contain 'rng'.
-        """
         rng = aux_vars.get("rng")
 
         v_data, _, cond = batch
@@ -140,7 +139,8 @@ class SymmetricHyperRBM(nn.Module):
 
     # the generate function overrides T=1.0 with a user-defined annealing schedule
     @torch.no_grad()
-    def generate(self, cond_batch: torch.Tensor, T_schedule: torch.Tensor, rng: Optional[torch.Generator] = None) -> torch.Tensor:
+    def generate(self, cond_batch: torch.Tensor, T_schedule: torch.Tensor,
+            rng: Optional[torch.Generator] = None, num_tail_samples: Optional[int] = None) -> torch.Tensor:
         device = self.W.device
         dtype = self.W.dtype
         cond_batch = cond_batch.to(device=device, dtype=dtype)
@@ -153,10 +153,42 @@ class SymmetricHyperRBM(nn.Module):
 
         v = torch.bernoulli(torch.full((B, self.num_v), 0.5, device=device, dtype=dtype), generator=rng)
         h = torch.zeros((B, self.num_h), device=device, dtype=dtype)
-
         u = torch.bernoulli(torch.full((B, 1), 0.5, device=device, dtype=dtype), generator=rng)
 
-        for T_val in T_schedule:
+        tail = []
+        tail_start = int(T_schedule.numel()) - int(num_tail_samples or 0)
+
+        for i, T_val in enumerate(T_schedule):
             v, h, u = self._gibbs_step(v, h, u, b_mod, c_mod, rng, T=float(T_val))
 
-        return v
+            # keep as many tail samples as requested towards the end of the schedule
+            if num_tail_samples is not None and i >= tail_start:
+                tail.append(v.clone())
+
+        if tail:
+            return torch.stack(tail, dim=0)  # (k, B, num_v) - includes k=1
+        return v  # (B, num_v)
+
+
+#    # the generate function overrides T=1.0 with a user-defined annealing schedule
+#    @torch.no_grad()
+#    def generate(self, cond_batch: torch.Tensor, T_schedule: torch.Tensor, rng: Optional[torch.Generator] = None) -> torch.Tensor:
+#        device = self.W.device
+#        dtype = self.W.dtype
+#        cond_batch = cond_batch.to(device=device, dtype=dtype)
+#
+#        if cond_batch.dim() == 1:
+#            cond_batch = cond_batch.unsqueeze(0)
+#
+#        B = cond_batch.shape[0]
+#        b_mod, c_mod = self._compute_mod_biases(cond_batch)
+#
+#        v = torch.bernoulli(torch.full((B, self.num_v), 0.5, device=device, dtype=dtype), generator=rng)
+#        h = torch.zeros((B, self.num_h), device=device, dtype=dtype)
+#
+#        u = torch.bernoulli(torch.full((B, 1), 0.5, device=device, dtype=dtype), generator=rng)
+#
+#        for T_val in T_schedule:
+#            v, h, u = self._gibbs_step(v, h, u, b_mod, c_mod, rng, T=float(T_val))
+#
+#        return v
