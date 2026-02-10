@@ -1,2 +1,0 @@
-- [ ] Maybe at some point in the future pivot the overlap .csv to have one column with train_samples
-- [ ] Dont forget to pu symmetric rbm model description in there.

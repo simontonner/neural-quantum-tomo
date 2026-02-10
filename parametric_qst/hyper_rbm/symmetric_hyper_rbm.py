@@ -1,3 +1,8 @@
+#######
+# For a detailed description of the different terms, please refer to the file symmetric_rbm_docu.md
+#######
+
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
