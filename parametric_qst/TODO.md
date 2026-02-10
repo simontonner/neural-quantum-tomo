@@ -1,8 +1,3 @@
 - [ ] Maybe at some point in the future pivot the overlap .csv to have one column with train_samples
 - [ ] Dont forget to pu symmetric rbm model description in there.
 - [ ] Only load one final entangle file to be used for all plots
-- [ ] We never even use the tail logic when generating. Maybe drop it from the model?
-- [ ] In the suscept experiment. Rething the common seed logic. The multi-seed one deos it differently I think.
-- [ ] In the 3x3 experiment viet did not include 4.5 during training. Thats why his graphs were nicer.
-- [ ] Maybe do the : dataset.num_qubits
-- [ ] In the susceptibility eval figures i say SYSTEM_SIDE = 4

@@ -1,5 +1,3 @@
-from collections import deque
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -168,27 +166,3 @@ class SymmetricHyperRBM(nn.Module):
         if tail:
             return torch.stack(tail, dim=0)  # (k, B, num_v) - includes k=1
         return v  # (B, num_v)
-
-
-#    # the generate function overrides T=1.0 with a user-defined annealing schedule
-#    @torch.no_grad()
-#    def generate(self, cond_batch: torch.Tensor, T_schedule: torch.Tensor, rng: Optional[torch.Generator] = None) -> torch.Tensor:
-#        device = self.W.device
-#        dtype = self.W.dtype
-#        cond_batch = cond_batch.to(device=device, dtype=dtype)
-#
-#        if cond_batch.dim() == 1:
-#            cond_batch = cond_batch.unsqueeze(0)
-#
-#        B = cond_batch.shape[0]
-#        b_mod, c_mod = self._compute_mod_biases(cond_batch)
-#
-#        v = torch.bernoulli(torch.full((B, self.num_v), 0.5, device=device, dtype=dtype), generator=rng)
-#        h = torch.zeros((B, self.num_h), device=device, dtype=dtype)
-#
-#        u = torch.bernoulli(torch.full((B, 1), 0.5, device=device, dtype=dtype), generator=rng)
-#
-#        for T_val in T_schedule:
-#            v, h, u = self._gibbs_step(v, h, u, b_mod, c_mod, rng, T=float(T_val))
-#
-#        return v
