@@ -1,0 +1,17 @@
+name: qst-rbm-env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+      - jax==0.6.1
+      - jaxtyping==0.3.2
+      - flax==0.10.6
+      - optax==0.2.5
+      - tqdm==4.67.1
+      - matplotlib==3.10.3
+      - jupyterlab==4.4.3     # automatically installed by DataSpell (use whatever fits you)
+
+

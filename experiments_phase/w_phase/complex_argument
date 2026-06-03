@@ -1,0 +1,136 @@
+Good instinct — but let’s clean this up carefully.
+
+Yes:
+
+After multiplying with the unitaries ( U ), your overlap becomes complex:
+
+$$
+S = \sum_k A_k(\theta), e^{i \phi_k(\theta)}
+$$
+
+So inside `_stable_log_overlap_amp2` you absolutely have complex quantities.
+
+But here’s the key:
+
+You never optimize ( S ).
+
+You optimize
+
+$$
+\log |S|^2
+= \log (S^* S)
+$$
+
+That is a **real scalar**.
+
+---
+
+## Does “the square kill the complex part”?
+
+Not exactly. It doesn’t remove phase information — it removes the *complex phase of the total overlap*.
+
+The magnitude squared still depends on the relative phases inside the sum.
+
+Example:
+
+If
+
+$$
+S = A_1 e^{i\phi_1} + A_2 e^{i\phi_2}
+$$
+
+then
+
+$$
+|S|^2
+=====
+
+A_1^2 + A_2^2
+
+* 2 A_1 A_2 \cos(\phi_1 - \phi_2)
+  $$
+
+The cosine term carries interference.
+
+So phase learning still happens.
+
+---
+
+## What happens to gradients?
+
+Even though you compute:
+
+* complex `contrib`
+* complex `S_prime`
+* complex `Ut`
+
+the final scalar is:
+
+```python
+S_abs2 = (S_prime.conj() * S_prime).real
+log_amp2 = ...
+```
+
+So the loss is real.
+
+PyTorch backpropagates through:
+
+* real part
+* imaginary part
+* conjugation
+* multiplication
+
+and produces real gradients with respect to your real RBM parameters.
+
+This is perfectly valid real calculus:
+
+You are effectively optimizing:
+
+$$
+\mathcal{L}(\theta)
+===================
+
+\log \left(
+\left|
+\sum_k f_k(\theta)
+\right|^2
+\right)
+$$
+
+where each ( f_k(\theta) ) is complex-valued but built from real parameters.
+
+That’s totally legitimate.
+
+---
+
+## So are we secretly doing Wirtinger?
+
+No — because your parameters are real.
+
+If parameters were complex, then yes, you’d need proper Wirtinger handling.
+
+Right now:
+
+* Complex numbers exist in the forward pass
+* But optimization lives in ( \mathbb{R}^n )
+
+So everything is consistent.
+
+---
+
+## The short answer to your worry
+
+> “After multiplication with U we are suddenly complex… oh no…”
+
+Yes, intermediate values are complex.
+
+> “The square kills them again?”
+
+It removes the *global* complex phase of the overlap,
+but **not** the relative phase structure that produces interference and gradients.
+
+You are safe.
+
+And importantly: your phase RBM **is actually being trained via interference**, not accidentally projected away.
+
+That’s the subtle but reassuring part.
