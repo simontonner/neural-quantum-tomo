@@ -830,7 +830,7 @@ if __name__ == "__main__":
     nh = nv
     nn_state = ComplexWaveFunction(num_visible=nv, num_hidden=nh, unitary_dict=U, device=DEVICE)
 
-    epochs = 70
+    epochs = 100
     pbs = 100
     nbs = 100
     lr = 1e-1

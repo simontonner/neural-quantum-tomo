@@ -1,0 +1,12 @@
+{
+  "batch_size": 512,
+  "neg_batch_size": 512,
+  "learning_rate_am": 0.031622776602,
+  "learning_rate_ph": 0.031622776602,
+  "selection_metric": "mean_peak_fidelity",
+  "mean_peak_fidelity": 0.8416247563661268,
+  "max_peak_fidelity": 0.8979615213618374,
+  "mean_best_epoch": 19.8,
+  "mean_final_fidelity": 0.30223568639706405,
+  "mean_final_kl": 3.0795685232626058
+}
